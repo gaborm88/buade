@@ -5,9 +5,11 @@ const router: express.Router = express.Router();
 
 router.get("/", function(_, res: express.Response) {
   checkVersion()
-  .then(text => {
-    res.send(text);
+  .then(output => {
+    console.log({output})
+    res.send(output);
   }).catch(err => {
+    console.log({err})
     res.status(500).send(err.message);
   });
 });

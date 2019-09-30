@@ -1,25 +1,22 @@
 import { spawn } from 'child_process';
 
-type execSpawn = (command: string, params: string[], options: any) => Promise<String>; 
+type runSpawn = (command: string, params: string[], options: any) => Promise<any>; 
 
-export function execSpawn({command, params, options}): Promise<String> {
+export function runSpawn({command, params, options}): Promise<any> {
+  console.log({command, params, options})
   const child = spawn(command, params, options)
 
-  return new Promise<String>((resolve, reject) => {
-    const resolver: {text: string} = { text: "" }
+  return new Promise<any>((resolve, reject) => {
+    const output: any = []
+    const error: any = []
 
-    child.on('exit', function (code, signal) {
-      console.log(`child process exited with code ${code} and signal ${signal}`);
-      resolve(resolver.text)
-    });
-    
     child.stdout.on('data', (data) => {
-      resolver.text = resolver.text.concat(data)
-      console.log(`child stdout:\n${data}`);
+      output.push(...data.toString().split('\n'))
     });
     child.stderr.on('data', (data) => {
-      console.error(`child stderr:\n${data}`);
-      reject(data)
+      error.push(...data.toString().split('\n'))
     });
+
+    child.on('close', () => error.length === 0 ? resolve(output) : reject(error))
   })
 }
