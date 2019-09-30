@@ -1,8 +1,8 @@
 import { spawn } from 'child_process';
 
-type Options = {command: string, params: string[], options: {}}
+type execSpawn = (command: string, params: string[], options: any) => Promise<String>; 
 
-export function execSpawn({command, params, options}: Options): Promise<String> {
+export function execSpawn({command, params, options}): Promise<String> {
   const child = spawn(command, params, options)
 
   return new Promise<String>((resolve, reject) => {
