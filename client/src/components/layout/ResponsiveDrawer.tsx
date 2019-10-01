@@ -17,6 +17,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 
+import Link from '@material-ui/core/Link';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -82,7 +84,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function MiniDrawer() {
+export default function MiniDrawer(props: any) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -117,7 +119,12 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Buade
+            <Link
+              href="/"
+              color="inherit"
+              underline="none">
+                Buade
+            </Link>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -142,7 +149,7 @@ export default function MiniDrawer() {
         </div>
         <Divider />
         <List>
-          {['New', 'Projects'].map((text, index) => (
+          {['New', 'Projects'].map((text) => (
             <ListItem button key={text}>
               <ListItemIcon><CheckBoxOutlineBlank /></ListItemIcon>
               <ListItemText primary={text} />
@@ -161,9 +168,7 @@ export default function MiniDrawer() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          asd
-        </Typography>
+            { props.children }
       </main>
     </div>
   );
