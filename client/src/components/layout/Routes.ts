@@ -1,24 +1,12 @@
 import { Home, AccountCircle } from '@material-ui/icons';
 import Landing from './../landing/Landing'
 import ProjectsComponent from './../projects/ProjectsComponent'
-import SvgIcon from '@material-ui/core/SvgIcon';
-
-type SvgIconComponent = typeof SvgIcon;
-
-type MenuRoute = {
-  path: string,
-  sidebarName: string,
-  navbarName: string,
-  icon: SvgIconComponent,
-  component: React.FC,
-  type: 'main' | 'sub';
-}
+import MenuRoute from "./MenuRoute";
 
 const Routes: MenuRoute[] = [
   {
     path: '/',
     sidebarName: 'New',
-    navbarName: 'New',
     icon: Home,
     component: Landing,
     type: 'main'
@@ -26,11 +14,24 @@ const Routes: MenuRoute[] = [
   {
     path: '/projects',
     sidebarName: 'Projects',
-    navbarName: 'Projects',
     icon: AccountCircle,
     component: ProjectsComponent,
     type: 'main'
-  }
+  },
+  {
+    path: '/',
+    sidebarName: 'Settings',
+    icon: Home,
+    component: Landing,
+    type: 'sub'
+  },
+  {
+    path: '/',
+    sidebarName: 'Log out',
+    icon: Home,
+    component: Landing,
+    type: 'sub'
+  },
 ]
 
 export default Routes

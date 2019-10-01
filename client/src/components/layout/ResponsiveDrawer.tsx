@@ -15,9 +15,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
 import Link from '@material-ui/core/Link';
 
+import MenuRoute from "./MenuRoute";
 import Routes from "./Routes";
 
 const drawerWidth = 240;
@@ -85,6 +85,28 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+type ListFromRoutesProps = {
+  routes: MenuRoute[]
+}
+
+const ListFromRoutes = ({routes }: ListFromRoutesProps) => {
+  return (
+    <List>
+      {routes.map((prop: MenuRoute) => (
+        <Link href={prop.path}
+              key={prop.path}
+              color="inherit"
+              underline="none">   
+          <ListItem button> {/* selected */}
+            <ListItemIcon><prop.icon /></ListItemIcon>
+            <ListItemText primary={prop.sidebarName} />
+          </ListItem>
+        </Link>
+      ))}
+    </List>
+  )
+}
+
 export default function MiniDrawer(props: any) {
   const classes = useStyles();
   const theme = useTheme();
@@ -149,27 +171,10 @@ export default function MiniDrawer(props: any) {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          {Routes.map((prop: any) => (
-            <Link href={prop.path}
-                  key={prop.path}
-                  color="inherit"
-                  underline="none">   
-              <ListItem button> {/* selected */}
-                <ListItemIcon><prop.icon /></ListItemIcon>
-                <ListItemText primary={prop.sidebarName} />
-              </ListItem>
-            </Link>
-          ))}
-        </List>
+        <ListFromRoutes routes={Routes.filter(route => route.type === 'main')} />
         <Divider />
         <List>
-          {['Settings', 'Log out'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon><CheckBoxOutlineBlank /></ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListFromRoutes routes={Routes.filter(route => route.type === 'sub')} />
         </List>
       </Drawer>
       <main className={classes.content}>
