@@ -16,8 +16,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank';
-
 import Link from '@material-ui/core/Link';
+
+import Routes from "./Routes";
 
 const drawerWidth = 240;
 
@@ -149,11 +150,16 @@ export default function MiniDrawer(props: any) {
         </div>
         <Divider />
         <List>
-          {['New', 'Projects'].map((text) => (
-            <ListItem button key={text}>
-              <ListItemIcon><CheckBoxOutlineBlank /></ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
+          {Routes.map((prop: any) => (
+            <Link href={prop.path}
+                  key={prop.path}
+                  color="inherit"
+                  underline="none">   
+              <ListItem button> {/* selected */}
+                <ListItemIcon><prop.icon /></ListItemIcon>
+                <ListItemText primary={prop.sidebarName} />
+              </ListItem>
+            </Link>
           ))}
         </List>
         <Divider />
