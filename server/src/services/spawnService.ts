@@ -1,8 +1,8 @@
 import { spawn } from 'child_process';
 
-type runSpawn = (command: string, params: string[], options: any) => Promise<any>; 
+type runSpawnParams = {command: string, params: string[], options: object};
 
-export function runSpawn({command, params, options}): Promise<any> {
+export function runSpawn({command, params, options}: runSpawnParams): Promise<any> {
   console.log({command, params, options})
   const child = spawn(command, params, options)
 
